@@ -5,7 +5,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SoulKnight : Player
+public class SoulKnight : PlayerController
 {
     [Header("Movement")]
     [SerializeField] Rigidbody2D rb;
