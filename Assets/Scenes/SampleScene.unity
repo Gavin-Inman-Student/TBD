@@ -2011,7 +2011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1
   player: {fileID: 935152073}
-  dashSpeed: 10
+  dashSpeed: 100
   canDash: 1
   isDashing: 0
   dashCoolDown: 10

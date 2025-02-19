@@ -11,10 +11,10 @@ public class MeleeEnemy : MonoBehaviour
 
     [Header("Dash")]
     [SerializeField] float dashSpeed;
+    [SerializeField] float dashTime;
     [SerializeField] bool canDash = true;
     [SerializeField] bool isDashing;
     [SerializeField] float dashCoolDown;
-    [SerializeField] Vector2 positionCheck;
 
     [Header("Attack")]
     [SerializeField] float stopDistance;
@@ -31,7 +31,6 @@ public class MeleeEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(PostionCheck());
         Movement();
         StartCoroutine(Dash());
         float distance = Vector2.Distance(transform.position, player.position);
@@ -51,22 +50,17 @@ public class MeleeEnemy : MonoBehaviour
         }
         
     }
-    IEnumerator PostionCheck()
-    {
-        if(isDashing == false)
-        {
-            positionCheck = player.position;
-            yield return new WaitForSeconds(2);
-        }
-    }
     IEnumerator Dash()
     {
         if (canDash == true && attacking == false)
         {
             canDash = false;
             isDashing = true;
-            transform.position = Vector2.MoveTowards(transform.position, positionCheck, moveSpeed * Time.deltaTime);
-            yield return new WaitForSeconds(0.2f);
+            if(isDashing)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player.position, dashSpeed * Time.deltaTime);
+            }
+            yield return new WaitForSeconds(dashTime);
             isDashing = false;
             yield return new WaitForSeconds(dashCoolDown);
             canDash = true;
