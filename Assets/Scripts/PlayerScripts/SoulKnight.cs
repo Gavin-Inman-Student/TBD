@@ -10,12 +10,8 @@ public class SoulKnight : PlayerController
 
     [Header("Movement")]
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] float moveSpeed;
 
     [Header("Dash")]
-    [SerializeField] float dashSpeed;
-    [SerializeField] float dashTime;
-    [SerializeField] float dashCoolDown;
 
     [Header("Look")]
     [SerializeField] Camera camera;
@@ -27,10 +23,13 @@ public class SoulKnight : PlayerController
     [SerializeField] GameObject soulFire;
 
     [Header("SoulEssence")]
-    [SerializeField] float regenAmmount;
-    [SerializeField] float regenSpeed;
+    [SerializeField] EssenceBar essenceBar;
     //Testing purposes...allows us to view the soul ammount from the inspector
     [SerializeField] float soulAmmount;
+    [SerializeField] float healthAmmount;
+
+    [Header("Health")]
+    [SerializeField] HealthBar healthBar;
 
     void Start()
     {
@@ -47,12 +46,12 @@ public class SoulKnight : PlayerController
         soulAmmount = soulEssence;
 
         //Movement
-        Movement(rb, moveSpeed);
+        Movement(rb);
 
         //Dash
         if (Input.GetKey(KeyCode.Space))
         {
-            StartCoroutine(Dash(rb, dashSpeed, dashTime, dashCoolDown));
+            StartCoroutine(Dash(rb));
         }
 
         //Look/Aim
@@ -62,7 +61,7 @@ public class SoulKnight : PlayerController
         if (Input.GetKey(KeyCode.E))
         {
             //SoulEssenceManager is called when abilty used
-            SoulEssenceManager(20);
+            SoulEssenceManager(essenceBar, 20);
             StartCoroutine(SoulFire(soulFire, spawnPoint));
         }
 
@@ -70,6 +69,6 @@ public class SoulKnight : PlayerController
 
 
         //EssenceRegen
-        StartCoroutine(EssenceRegen(regenAmmount, regenSpeed));
+        StartCoroutine(EssenceRegen(essenceBar));
     }
 }

@@ -7,12 +7,8 @@ public class Wisp : PlayerController
 
     [Header("Movement")]
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] float moveSpeed;
 
     [Header("Dash")]
-    [SerializeField] float dashSpeed;
-    [SerializeField] float dashTime;
-    [SerializeField] float dashCoolDown;
 
     [Header("Look")]
     [SerializeField] Camera camera;
@@ -24,17 +20,22 @@ public class Wisp : PlayerController
     [SerializeField] GameObject soulFire;
 
     [Header("SoulEssence")]
-    [SerializeField] float regenAmmount;
-    [SerializeField] float regenSpeed;
+    [SerializeField] EssenceBar essenceBar;
     //Testing purposes...allows us to view the soul ammount from the inspector
     [SerializeField] float soulAmmount;
+    [SerializeField] float healthAmmount;
+
+    [Header("Health")]
+    [SerializeField] HealthBar healthBar;
 
     void Start()
     {
         canDash = true;
         canRegen = true;
         isCasting = false;
+        isDamaged = false;
         soulEssence = maxEssence;
+        health = maxHealth;
     }
 
  
@@ -42,14 +43,15 @@ public class Wisp : PlayerController
     {
         //Testing purposes...allows us to view the soul ammount from the inspector
         soulAmmount = soulEssence;
+        healthAmmount = health;
         
         //Movement
-        Movement(rb, moveSpeed);
+        Movement(rb);
         
         //Dash
         if (Input.GetKey(KeyCode.Space))
         {
-            StartCoroutine(Dash(rb, dashSpeed, dashTime, dashCoolDown));
+            StartCoroutine(Dash(rb));
         }
         
         //Look/Aim
@@ -59,14 +61,17 @@ public class Wisp : PlayerController
         if (Input.GetKey(KeyCode.E))
         {
             //SoulEssenceManager is called when abilty used
-            SoulEssenceManager(20);
+            SoulEssenceManager(essenceBar, 20);
             StartCoroutine(SoulFire(soulFire, spawnPoint));  
         }
 
-        
-        
-
         //EssenceRegen
-        StartCoroutine(EssenceRegen(regenAmmount, regenSpeed));
+        StartCoroutine(EssenceRegen(essenceBar));
+        
+        //Test damage and healthbar/essence bar
+        if (Input.GetKey(KeyCode.Q))
+        {
+            StartCoroutine(HealthManager(healthBar, 0, 20));
+        }
     }
 }

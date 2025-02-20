@@ -7,10 +7,14 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     protected static bool isMoving;
+    protected static float moveSpeed = 1.5f;
 
     [Header("Dash")]
     protected static bool isDashing;
     protected static bool canDash;
+    protected static float dashSpeed = 8;
+    protected static float dashTime = 0.2f;
+    protected static float dashCoolDown = 2;
 
     [Header("SoulFire")]
     protected static bool isCasting;
@@ -20,9 +24,18 @@ public class PlayerController : MonoBehaviour
     protected static bool canRegen;
     protected static float maxEssence = 50;
     protected static float soulEssence;
+    protected static float regenAmmount = 5;
+    protected static float regenSpeed = 5;
+
+
+    [Header("Health")]
+    protected static bool isDamaged;
+    protected static float maxHealth = 100;
+    protected static float health;
+    protected static float invincibility = 0.5f;
 
     //Player Movement Function that takes which player body to control and the speed. Allows the player to move.
-    public static void Movement(Rigidbody2D rb, float moveSpeed)
+    public static void Movement(Rigidbody2D rb)
     {
         if (isDashing == true)
         {
@@ -37,7 +50,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //Player Dash Function that takes which player body to control, how fast, how long, and the cooldown for the dash. Allows the player to dash.
-    public static IEnumerator Dash(Rigidbody2D rb, float dashSpeed, float dashTime, float dashCoolDown)
+    public static IEnumerator Dash(Rigidbody2D rb)
     {
         float movY = Input.GetAxisRaw("Vertical");
         float movX = Input.GetAxisRaw("Horizontal");
@@ -80,26 +93,35 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public static void HealthManager(float maxHealth, float health, float healingFactor, float damage)
+    public static IEnumerator HealthManager(HealthBar healthBar, float healingFactor, float damage)
     {
-        health -= damage;
-        if (health - damage <= 0)
+        if(isDamaged == false)
         {
-            Death();
+            isDamaged = true;
+            healthBar.SetMaxHealth(maxHealth, health);
+            health -= damage;
+            healthBar.SetHealth(health);
+            if (health - damage <= 0)
+            {
+                Death();
+            }
+            if(healingFactor > 0)
+            {
+                health += healingFactor;
+            }
+            if (health > maxHealth)
+            {
+                health = maxHealth;
+            }
+            yield return new WaitForSeconds(invincibility);
+            isDamaged = false;
         }
-        if(healingFactor > 0)
-        {
-            health += healingFactor;
-        }
-        if (health > maxHealth)
-        {
-            health = maxHealth;
-        }
+        
     }
 
-    public static void SoulEssenceManager(float cost)
+    public static void SoulEssenceManager(EssenceBar essenceBar, float cost)
     {
-        
+        essenceBar.SetMaxEssence(maxEssence, soulEssence);
         if (soulEssence - cost < 0)
         {
             canShoot = false;
@@ -107,11 +129,12 @@ public class PlayerController : MonoBehaviour
         else if (soulEssence - cost >= 0 && isCasting == false)
         {
             soulEssence -= cost;
+            essenceBar.SetEssence(soulEssence);
             canShoot = true;   
         }
     }
 
-    public static IEnumerator EssenceRegen(float regenAmmount, float regenSpeed)
+    public static IEnumerator EssenceRegen(EssenceBar essenceBar)
     {
         if(canRegen == true)
         {
@@ -124,6 +147,7 @@ public class PlayerController : MonoBehaviour
             {
                 canRegen = false;
                 soulEssence = soulEssence + regenAmmount;
+                essenceBar.SetEssence(soulEssence);
                 yield return new WaitForSeconds(regenSpeed);
                 canRegen = true;       
             }
