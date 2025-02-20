@@ -69,7 +69,7 @@ Camera:
   far clip plane: 1000
   field of view: 116.47774
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -284,7 +284,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &33008084881699621
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -333,17 +333,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ae00612a26ba443a67169abd887c3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMoving: 0
   rb: {fileID: 604761898780521577}
   moveSpeed: 1.2
   dashSpeed: 8
   dashTime: 0.2
   dashCoolDown: 2
-  camera: {fileID: 0}
-  rotationPoint: {fileID: 0}
-  spawnPoint: {fileID: 0}
-  RotationPoint: {fileID: 0}
-  soulFire: {fileID: 0}
+  camera: {fileID: 3178721629332521827}
+  rotationPoint: {fileID: 7381852680453497230}
+  spawner: {fileID: 8500748912837443187}
+  spawnPoint: {fileID: 331042035334019231}
+  soulFire: {fileID: 296734189390238399, guid: 7cb0b598a7ee4ac44af0495bf4f6b909, type: 3}
+  regenAmmount: 5
+  regenSpeed: 5
+  soulAmmount: 0
 --- !u!1 &8500748912837443187
 GameObject:
   m_ObjectHideFlags: 0

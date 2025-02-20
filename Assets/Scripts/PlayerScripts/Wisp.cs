@@ -22,21 +22,27 @@ public class Wisp : PlayerController
     [Header("SoulFire")]
     [SerializeField] Transform spawnPoint;
     [SerializeField] GameObject soulFire;
+
+    [Header("SoulEssence")]
+    [SerializeField] float regenAmmount;
+    [SerializeField] float regenSpeed;
+    //Testing purposes...allows us to view the soul ammount from the inspector
+    [SerializeField] float soulAmmount;
+
     void Start()
     {
         canDash = true;
-        isShooting = false;
-
-        float MaxEssence = maxSoulEssence;
-        float SoulEssence = soulEssence;
-        float Cost = cost;
-        float RegenAmmount = regenAmmount;
-        float RegenSpeed = regenSpeed;
-}
+        canRegen = true;
+        isCasting = false;
+        soulEssence = maxEssence;
+    }
 
  
     void Update()
     {
+        //Testing purposes...allows us to view the soul ammount from the inspector
+        soulAmmount = soulEssence;
+        
         //Movement
         Movement(rb, moveSpeed);
         
@@ -52,9 +58,15 @@ public class Wisp : PlayerController
         //SoulFire
         if (Input.GetKey(KeyCode.E))
         {
-            StartCoroutine(SoulFire(soulFire, spawnPoint));
+            //SoulEssenceManager is called when abilty used
+            SoulEssenceManager(20);
+            StartCoroutine(SoulFire(soulFire, spawnPoint));  
         }
 
-        //SoulEssenceManager();
+        
+        
+
+        //EssenceRegen
+        StartCoroutine(EssenceRegen(regenAmmount, regenSpeed));
     }
 }

@@ -6,24 +6,20 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    public bool isMoving;
+    protected static bool isMoving;
 
     [Header("Dash")]
     protected static bool isDashing;
     protected static bool canDash;
 
     [Header("SoulFire")]
-    protected static bool isShooting;
+    protected static bool isCasting;
     protected static bool canShoot;
 
     [Header("SoulEssence")]
     protected static bool canRegen;
-    protected static float maxSoulEssence;
-    protected float soulEssence;
-    protected float cost;
-    protected float regenAmmount;
-    protected float regenSpeed;
-
+    protected static float maxEssence = 50;
+    protected static float soulEssence;
 
     //Player Movement Function that takes which player body to control and the speed. Allows the player to move.
     public static void Movement(Rigidbody2D rb, float moveSpeed)
@@ -73,12 +69,13 @@ public class PlayerController : MonoBehaviour
     //Instantiates SoulFire Ranged Attack.
     public static IEnumerator SoulFire(GameObject soulFire, Transform spawnPoint)
     {
-        if (isShooting  == false)
+        if (isCasting  == false && canShoot == true)
         {
+            isCasting = true;
             GameObject projectile = Instantiate(soulFire, spawnPoint.position, spawnPoint.rotation);
-            isShooting = true;
             yield return new WaitForSeconds(1);
-            isShooting = false;
+            
+            isCasting = false;
         }
         
     }
@@ -100,41 +97,43 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public static void SoulEssenceManager(float maxSoulEssence, float soulEssence, float cost, float regenAmmount, float regenSpeed)
+    public static void SoulEssenceManager(float cost)
     {
         
-        if (soulEssence - cost <= 0)
+        if (soulEssence - cost < 0)
         {
             canShoot = false;
-            soulEssence += cost;
         }
-        else if (soulEssence - cost >= 0)
+        else if (soulEssence - cost >= 0 && isCasting == false)
         {
-            canShoot = true;
+            soulEssence -= cost;
+            canShoot = true;   
         }
     }
 
-    IEnumerator EssenceRegen(float maxSoulEssence, float soulEssence, float regenAmmount, float regenSpeed)
+    public static IEnumerator EssenceRegen(float regenAmmount, float regenSpeed)
     {
         if(canRegen == true)
         {
-            if (soulEssence + regenAmmount >= maxSoulEssence)
+            if (soulEssence + regenAmmount >= maxEssence)
             {
-                soulEssence = maxSoulEssence;
+                soulEssence = maxEssence;
+                yield break;
             }
-            else if (soulEssence + regenAmmount <= maxSoulEssence)
+            else if (soulEssence + regenAmmount <= maxEssence)
             {
-                soulEssence += regenAmmount;
                 canRegen = false;
+                soulEssence = soulEssence + regenAmmount;
+                yield return new WaitForSeconds(regenSpeed);
+                canRegen = true;       
             }
         }
-        yield return new WaitForSeconds(regenSpeed);
-        canRegen = true;       
+        
     }
 
     public static void Death()
     {
-
+        
     }
 
 }
