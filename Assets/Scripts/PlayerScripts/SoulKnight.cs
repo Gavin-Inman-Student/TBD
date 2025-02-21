@@ -7,17 +7,6 @@ using UnityEngine.EventSystems;
 
 public class SoulKnight : PlayerController
 {
-
-    [Header("Movement")]
-    [SerializeField] Rigidbody2D rb;
-
-    [Header("Dash")]
-
-    [Header("Look")]
-    [SerializeField] Camera camera;
-    [SerializeField] GameObject rotationPoint;
-    [SerializeField] GameObject spawner;
-
     [Header("SoulFire")]
     [SerializeField] Transform spawnPoint;
     [SerializeField] GameObject soulFire;
@@ -55,14 +44,14 @@ public class SoulKnight : PlayerController
         }
 
         //Look/Aim
-        Look(camera, rotationPoint, spawner);
+        Look();
 
         //SoulFire
         if (Input.GetKey(KeyCode.E))
         {
             //SoulEssenceManager is called when abilty used
             SoulEssenceManager(essenceBar, 20);
-            StartCoroutine(SoulFire(soulFire, spawnPoint));
+            StartCoroutine(SoulFire());
         }
 
 

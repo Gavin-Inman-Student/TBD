@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     protected static bool isMoving;
     protected static float moveSpeed = 1.5f;
+    protected static Rigidbody2D rb;
 
     [Header("Dash")]
     protected static bool isDashing;
@@ -16,7 +18,14 @@ public class PlayerController : MonoBehaviour
     protected static float dashTime = 0.2f;
     protected static float dashCoolDown = 2;
 
+    [Header("Look")]
+    protected static Camera camera;
+    protected static GameObject rotationPoint;
+    protected static GameObject spawner;
+
     [Header("SoulFire")]
+    protected static GameObject soulFire;
+    protected static Transform spawnPoint;
     protected static bool isCasting;
     protected static bool canShoot;
 
@@ -34,7 +43,14 @@ public class PlayerController : MonoBehaviour
     protected static float health;
     protected static float invincibility = 0.5f;
 
+
+
     //Player Movement Function that takes which player body to control and the speed. Allows the player to move.
+
+    private void Start()
+    {
+        
+    }
     public static void Movement(Rigidbody2D rb)
     {
         if (isDashing == true)
@@ -69,7 +85,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //Player Look Function that takes a camera and gameobject. Rotates the gameobject to face the cursor of the player.
-    public static void Look(Camera camera, GameObject rotationPoint, GameObject spawnPoint)
+    public static void Look()
     {
         Vector3 mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
         Vector3 rotation = mousePos - rotationPoint.transform.position;

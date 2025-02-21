@@ -4,23 +4,9 @@ using UnityEngine;
 
 public class Wisp : PlayerController
 {
-
-    [Header("Movement")]
-    [SerializeField] Rigidbody2D rb;
-
-    [Header("Dash")]
-
-    [Header("Look")]
-    [SerializeField] Camera camera;
-    [SerializeField] GameObject rotationPoint;
-    [SerializeField] GameObject spawner;
-
-    [Header("SoulFire")]
-    [SerializeField] Transform spawnPoint;
-    [SerializeField] GameObject soulFire;
-
+   
     [Header("SoulEssence")]
-    [SerializeField] EssenceBar essenceBar;
+    EssenceBar essenceBar;
     //Testing purposes...allows us to view the soul ammount from the inspector
     [SerializeField] float soulAmmount;
     [SerializeField] float healthAmmount;
@@ -30,6 +16,14 @@ public class Wisp : PlayerController
 
     void Start()
     {
+        //Movement
+        rb = GetComponent<Rigidbody2D>();
+
+        //Look and SoulFire
+        camera = GetComponent<Camera>();
+        rotationPoint = transform.GetChild(1).gameObject;
+        spawner = rotationPoint.transform.GetChild(0).gameObject;
+
         canDash = true;
         canRegen = true;
         isCasting = false;
@@ -55,14 +49,14 @@ public class Wisp : PlayerController
         }
         
         //Look/Aim
-        Look(camera, rotationPoint, spawner);
+        Look();
         
         //SoulFire
         if (Input.GetKey(KeyCode.E))
         {
             //SoulEssenceManager is called when abilty used
             SoulEssenceManager(essenceBar, 20);
-            StartCoroutine(SoulFire(soulFire, spawnPoint));  
+            StartCoroutine(SoulFire());  
         }
 
         //EssenceRegen
