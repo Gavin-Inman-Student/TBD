@@ -23,13 +23,14 @@ public class PlayerController : MonoBehaviour
     protected static GameObject rotationPoint;
     protected static GameObject spawner;
 
-    [Header("SoulFire")]
-    protected static GameObject soulFire;
+    [Header("Cast")]
+    //public static GameObject cast;
     protected static Transform spawnPoint;
     protected static bool isCasting;
     protected static bool canShoot;
 
     [Header("SoulEssence")]
+    protected static EssenceBar essenceBar;
     protected static bool canRegen;
     protected static float maxEssence = 50;
     protected static float soulEssence;
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Health")]
+    protected static HealthBar healthBar;
     protected static bool isDamaged;
     protected static float maxHealth = 100;
     protected static float health;
@@ -49,7 +51,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        
+      
     }
     public static void Movement(Rigidbody2D rb)
     {
@@ -66,7 +68,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //Player Dash Function that takes which player body to control, how fast, how long, and the cooldown for the dash. Allows the player to dash.
-    public static IEnumerator Dash(Rigidbody2D rb)
+    public static IEnumerator Dash()
     {
         float movY = Input.GetAxisRaw("Vertical");
         float movX = Input.GetAxisRaw("Horizontal");
@@ -96,12 +98,12 @@ public class PlayerController : MonoBehaviour
     }
 
     //Instantiates SoulFire Ranged Attack.
-    public static IEnumerator SoulFire(GameObject soulFire, Transform spawnPoint)
+    public static IEnumerator Cast(GameObject cast)
     {
         if (isCasting  == false && canShoot == true)
         {
             isCasting = true;
-            GameObject projectile = Instantiate(soulFire, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(cast, spawnPoint.position, spawnPoint.rotation);
             yield return new WaitForSeconds(1);
             
             isCasting = false;
@@ -109,7 +111,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public static IEnumerator HealthManager(HealthBar healthBar, float healingFactor, float damage)
+    public static IEnumerator HealthManager(float healingFactor, float damage)
     {
         if(isDamaged == false)
         {
@@ -135,7 +137,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public static void SoulEssenceManager(EssenceBar essenceBar, float cost)
+    public static void SoulEssenceManager(float cost)
     {
         essenceBar.SetMaxEssence(maxEssence, soulEssence);
         if (soulEssence - cost < 0)
@@ -150,7 +152,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public static IEnumerator EssenceRegen(EssenceBar essenceBar)
+    public static IEnumerator EssenceRegen()
     {
         if(canRegen == true)
         {

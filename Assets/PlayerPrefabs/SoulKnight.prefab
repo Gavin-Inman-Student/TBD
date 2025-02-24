@@ -187,7 +187,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8113570255047092668
 Transform:
   m_ObjectHideFlags: 0
@@ -296,16 +296,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15685ab02414c3f44b71f138872ad7ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 7705919255520474199}
-  camera: {fileID: 3468508098405880062}
-  rotationPoint: {fileID: 5980851407181236648}
-  spawner: {fileID: 4675830956121428544}
-  spawnPoint: {fileID: 7381882504727735298}
-  soulFire: {fileID: 296734189390238399, guid: 7cb0b598a7ee4ac44af0495bf4f6b909, type: 3}
-  essenceBar: {fileID: 0}
   soulAmmount: 0
   healthAmmount: 0
-  healthBar: {fileID: 0}
+  soulFire: {fileID: 296734189390238399, guid: 7cb0b598a7ee4ac44af0495bf4f6b909, type: 3}
 --- !u!70 &5012103998084564909
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

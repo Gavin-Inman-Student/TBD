@@ -4,32 +4,41 @@ using UnityEngine;
 
 public class Wisp : PlayerController
 {
-   
-    [Header("SoulEssence")]
-    EssenceBar essenceBar;
+    [SerializeField] EssenceBar eBar;
+    [SerializeField] HealthBar hBar;
+    [SerializeField] public static GameObject soulFire;
+
+
+
     //Testing purposes...allows us to view the soul ammount from the inspector
     [SerializeField] float soulAmmount;
     [SerializeField] float healthAmmount;
-
-    [Header("Health")]
-    [SerializeField] HealthBar healthBar;
 
     void Start()
     {
         //Movement
         rb = GetComponent<Rigidbody2D>();
 
-        //Look and SoulFire
-        camera = GetComponent<Camera>();
+        //Look and cast
         rotationPoint = transform.GetChild(1).gameObject;
         spawner = rotationPoint.transform.GetChild(0).gameObject;
+        soulFire = GameObject.FindGameObjectWithTag("SoulFire");
+        camera = Camera.main;
 
+        //dash
         canDash = true;
         canRegen = true;
-        isCasting = false;
+
+        //HealthManager
+        healthBar = hBar;
         isDamaged = false;
-        soulEssence = maxEssence;
         health = maxHealth;
+
+        //EssenceManager
+        essenceBar = eBar;
+        isCasting = false;
+        soulEssence = maxEssence;
+        
     }
 
  
@@ -45,7 +54,7 @@ public class Wisp : PlayerController
         //Dash
         if (Input.GetKey(KeyCode.Space))
         {
-            StartCoroutine(Dash(rb));
+            StartCoroutine(Dash());
         }
         
         //Look/Aim
@@ -55,17 +64,17 @@ public class Wisp : PlayerController
         if (Input.GetKey(KeyCode.E))
         {
             //SoulEssenceManager is called when abilty used
-            SoulEssenceManager(essenceBar, 20);
-            StartCoroutine(SoulFire());  
+            SoulEssenceManager(20);
+            StartCoroutine(Cast(soulFire));  
         }
 
         //EssenceRegen
-        StartCoroutine(EssenceRegen(essenceBar));
+        StartCoroutine(EssenceRegen());
         
         //Test damage and healthbar/essence bar
         if (Input.GetKey(KeyCode.Q))
         {
-            StartCoroutine(HealthManager(healthBar, 0, 20));
+            StartCoroutine(HealthManager(0, 20));
         }
     }
 }
