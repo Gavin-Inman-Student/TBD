@@ -7,43 +7,54 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    protected static bool isMoving;
-    protected static float moveSpeed = 1.5f;
-    protected static Rigidbody2D rb;
+    protected bool isMoving;
+    protected float moveSpeed = 1.5f;
+    protected Rigidbody2D rb;
+    protected GameObject wisp;
+    protected GameObject soulKnight;
+
+    [Header("Swap")]
+    protected static bool swapped = true;
+    protected static bool isSwapping;
+    protected static bool canSwap = true;
+    protected static float swapTime = 1;
+    protected static GameObject wispClone;
+    protected static GameObject soulKnightClone;
+    protected static GameObject selected;
+
 
     [Header("Dash")]
-    protected static bool isDashing;
-    protected static bool canDash;
-    protected static float dashSpeed = 8;
-    protected static float dashTime = 0.2f;
-    protected static float dashCoolDown = 2;
+    protected bool isDashing;
+    protected bool canDash;
+    protected float dashSpeed = 8;
+    protected float dashTime = 0.2f;
+    protected float dashCoolDown = 2;
 
     [Header("Look")]
-    protected static Camera camera;
-    protected static GameObject rotationPoint;
-    protected static GameObject spawner;
+    protected Camera camera;
+    protected GameObject rotationPoint;
 
     [Header("Cast")]
-    //public static GameObject cast;
-    protected static Transform spawnPoint;
-    protected static bool isCasting;
-    protected static bool canShoot;
+    protected GameObject cast;
+    protected Transform spawnPoint;
+    protected bool isCasting;
+    protected bool canShoot;
 
     [Header("SoulEssence")]
-    protected static EssenceBar essenceBar;
-    protected static bool canRegen;
-    protected static float maxEssence = 50;
-    protected static float soulEssence;
-    protected static float regenAmmount = 5;
-    protected static float regenSpeed = 5;
+    protected EssenceBar essenceBar;
+    protected bool canRegen;
+    protected float maxEssence = 50;
+    protected float soulEssence;
+    protected float regenAmmount = 5;
+    protected float regenSpeed = 5;
 
 
     [Header("Health")]
-    protected static HealthBar healthBar;
-    protected static bool isDamaged;
-    protected static float maxHealth = 100;
-    protected static float health;
-    protected static float invincibility = 0.5f;
+    protected HealthBar healthBar;
+    protected bool isDamaged;
+    protected float maxHealth = 100;
+    protected float health;
+    protected float invincibility = 0.5f;
 
 
 
@@ -51,9 +62,9 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-      
+
     }
-    public static void Movement(Rigidbody2D rb)
+    public void Movement(Rigidbody2D rb)
     {
         if (isDashing == true)
         {
@@ -68,7 +79,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //Player Dash Function that takes which player body to control, how fast, how long, and the cooldown for the dash. Allows the player to dash.
-    public static IEnumerator Dash()
+    public IEnumerator Dash()
     {
         float movY = Input.GetAxisRaw("Vertical");
         float movX = Input.GetAxisRaw("Horizontal");
@@ -87,7 +98,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //Player Look Function that takes a camera and gameobject. Rotates the gameobject to face the cursor of the player.
-    public static void Look()
+    public void Look()
     {
         Vector3 mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
         Vector3 rotation = mousePos - rotationPoint.transform.position;
@@ -98,7 +109,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //Instantiates SoulFire Ranged Attack.
-    public static IEnumerator Cast(GameObject cast)
+    public IEnumerator Cast(GameObject cast)
     {
         if (isCasting  == false && canShoot == true)
         {
@@ -111,7 +122,39 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public static IEnumerator HealthManager(float healingFactor, float damage)
+    //Swap Bodys
+    public IEnumerator Swap()
+    {
+
+        if (swapped == true && canSwap == true && isSwapping == false)
+        {
+            canSwap = false;
+            isSwapping = true;
+            selected = wisp;
+            wispClone = GameObject.Instantiate(wisp, spawnPoint.position, Quaternion.identity);
+            GameObject.Destroy(soulKnightClone);
+            yield return new WaitForSeconds(swapTime);
+            swapped = false;
+            isSwapping = false;
+            canSwap = true;
+        }
+        else if (swapped == false && canSwap == true && isSwapping == false)
+        {
+            canSwap = false;
+            isSwapping = true;
+            selected = soulKnight;
+            soulKnightClone = GameObject.Instantiate(soulKnight, spawnPoint.position, Quaternion.identity);
+            GameObject.Destroy(wispClone);
+            yield return new WaitForSeconds(swapTime);
+            swapped = true; 
+            isSwapping = false;
+            canSwap = true;
+        }
+        
+        
+    }
+
+    public IEnumerator HealthManager(float healingFactor, float damage)
     {
         if(isDamaged == false)
         {
@@ -137,7 +180,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public static void SoulEssenceManager(float cost)
+    public void SoulEssenceManager(float cost)
     {
         essenceBar.SetMaxEssence(maxEssence, soulEssence);
         if (soulEssence - cost < 0)
@@ -152,7 +195,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public static IEnumerator EssenceRegen()
+    public IEnumerator EssenceRegen()
     {
         if(canRegen == true)
         {
@@ -173,7 +216,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public static void Death()
+    public void Death()
     {
         
     }

@@ -6,7 +6,9 @@ public class Wisp : PlayerController
 {
     [SerializeField] EssenceBar eBar;
     [SerializeField] HealthBar hBar;
-    [SerializeField] public static GameObject soulFire;
+    [SerializeField] GameObject soulFire;
+    [SerializeField] GameObject pWisp;
+    [SerializeField] GameObject knight;
 
 
 
@@ -14,15 +16,20 @@ public class Wisp : PlayerController
     [SerializeField] float soulAmmount;
     [SerializeField] float healthAmmount;
 
+    private void Awake()
+    {
+    }
+
     void Start()
     {
         //Movement
         rb = GetComponent<Rigidbody2D>();
+        wisp = pWisp;
+        soulKnight = knight;
 
         //Look and cast
         rotationPoint = transform.GetChild(1).gameObject;
-        spawner = rotationPoint.transform.GetChild(0).gameObject;
-        soulFire = GameObject.FindGameObjectWithTag("SoulFire");
+        spawnPoint = rotationPoint.transform.GetChild(0);
         camera = Camera.main;
 
         //dash
@@ -64,8 +71,15 @@ public class Wisp : PlayerController
         if (Input.GetKey(KeyCode.E))
         {
             //SoulEssenceManager is called when abilty used
-            SoulEssenceManager(20);
-            StartCoroutine(Cast(soulFire));  
+            if (soulFire == null)
+            {
+                Debug.Log("soulFire is not assigned!");
+            }
+            else
+            {
+                SoulEssenceManager(20);
+                StartCoroutine(Cast(soulFire));
+            }
         }
 
         //EssenceRegen
@@ -75,6 +89,12 @@ public class Wisp : PlayerController
         if (Input.GetKey(KeyCode.Q))
         {
             StartCoroutine(HealthManager(0, 20));
+        }
+
+        //swap
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            StartCoroutine(Swap());
         }
     }
 }

@@ -333,16 +333,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ae00612a26ba443a67169abd887c3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 604761898780521577}
-  camera: {fileID: 3178721629332521827}
-  rotationPoint: {fileID: 7381852680453497230}
-  spawner: {fileID: 8500748912837443187}
-  spawnPoint: {fileID: 331042035334019231}
+  eBar: {fileID: 6396863019306681277, guid: bcb29d8c214b7fd48ad3d4f7d0c10a43, type: 3}
+  hBar: {fileID: 2517978071523847054, guid: 7ab6315a650128349a09461403a5a12b, type: 3}
   soulFire: {fileID: 296734189390238399, guid: 7cb0b598a7ee4ac44af0495bf4f6b909, type: 3}
-  essenceBar: {fileID: 0}
+  pWisp: {fileID: 7637277820191656616}
+  knight: {fileID: 5073273369821661608, guid: b18628895a3524f478c65aa17ae24336, type: 3}
   soulAmmount: 0
   healthAmmount: 0
-  healthBar: {fileID: 0}
 --- !u!1 &8500748912837443187
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,28 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class SoulKnight : PlayerController
 {
     [SerializeField] EssenceBar eBar;
     [SerializeField] HealthBar hBar;
     [SerializeField] GameObject soulFire;
+    [SerializeField] GameObject knight;
+    [SerializeField] GameObject pWisp;
+
+
 
     //Testing purposes...allows us to view the soul ammount from the inspector
     [SerializeField] float soulAmmount;
     [SerializeField] float healthAmmount;
 
+    private void Awake()
+    {
+    }
+
     void Start()
     {
         //Movement
         rb = GetComponent<Rigidbody2D>();
+        soulKnight = knight;
+        wisp = pWisp;
+
+        //swap
+        swapped = false;
 
         //Look and cast
         rotationPoint = transform.GetChild(1).gameObject;
-        spawner = rotationPoint.transform.GetChild(0).gameObject;
+        spawnPoint = rotationPoint.transform.GetChild(0);
         camera = Camera.main;
 
         //dash
@@ -64,8 +74,15 @@ public class SoulKnight : PlayerController
         if (Input.GetKey(KeyCode.E))
         {
             //SoulEssenceManager is called when abilty used
-            SoulEssenceManager(20);
-            StartCoroutine(Cast(soulFire));
+            if (soulFire == null)
+            {
+                Debug.Log("soulFire is not assigned!");
+            }
+            else
+            {
+                SoulEssenceManager(20);
+                StartCoroutine(Cast(soulFire));
+            }
         }
 
         //EssenceRegen
@@ -76,5 +93,16 @@ public class SoulKnight : PlayerController
         {
             StartCoroutine(HealthManager(0, 20));
         }
+
+        //swap
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            StartCoroutine(Swap());
+        }
+    }
+
+    void MeleeAttack()
+    {
+
     }
 }
