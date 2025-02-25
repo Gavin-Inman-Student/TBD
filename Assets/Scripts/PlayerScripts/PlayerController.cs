@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
     protected static float health;
     protected static float invincibility = 0.5f;
 
+    public static float damage = 20;
+
 
 
     //Player Movement Function that takes which player body to control and the speed. Allows the player to move.

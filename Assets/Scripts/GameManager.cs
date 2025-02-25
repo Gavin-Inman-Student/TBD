@@ -23,6 +23,8 @@ public class GameManager : PlayerController
         //sets transforms so player switch at current loction
         knightT = knightt;
         soulT = wispT;
+
+        SoulKnight.canAttack = true;
     }
 
     void Update()

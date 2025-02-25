@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class Goblin : MeleeEnemy
 {
-    [Header("Movement")]
-    [SerializeField] Transform enemy;
-    [SerializeField] Transform player;
-    [SerializeField] float moveSpeed;
-    [SerializeField] float moveTime;
-    [SerializeField] float stopTime;
-    [SerializeField] bool isStopping = false;
+    private void Start()
+    {
+        moveSpeed = 1;
+        enemy = this.transform;
+        maxHealth = 100;
+        health = maxHealth;
+    }
+
 
     void Update()
     {
-        StartCoroutine(Movement(enemy, player, moveSpeed, moveTime, stopTime, isStopping));
+        
+
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>(); 
+        
+        StartCoroutine(Movement());
+
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        HealthManager();
     }
 }

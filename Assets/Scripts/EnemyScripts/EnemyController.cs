@@ -5,7 +5,28 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public static IEnumerator Movement(Transform enemy, Transform player, float moveSpeed, float moveTime, float stopTime, bool isStopping)
+    [Header("Movement")]
+    protected Transform enemy;
+    protected Transform player;
+    protected float moveSpeed;
+    protected float moveTime;
+    protected float stopTime;
+    protected bool isStopping = false;
+
+    [Header("Health")]
+    protected HealthBar healthBar;
+    protected static bool isDamaged;
+    protected static float maxHealth;
+    protected static float health;
+    protected static float invincibility = 0.5f;
+    protected Collider2D soulFire;
+
+    void Start()
+    {
+        soulFire = GameObject.FindWithTag("SoulFire").GetComponent<Collider2D>();
+    }
+
+    public IEnumerator Movement()
     {
         if(isStopping == false)
         {
@@ -20,13 +41,33 @@ public class EnemyController : MonoBehaviour
             yield return new WaitForSeconds(stopTime);
             isStopping= false;
         }
-        
+    }
 
-        
+    public IEnumerator HealthManager()
+    {
+        if (isDamaged == false)
+        {
+            isDamaged = true;
+            healthBar.SetMaxHealth(maxHealth, health);
+            health -= PlayerController.damage;
+            healthBar.SetHealth(health);
+            if (health - PlayerController.damage <= 0)
+            {
+                Death();
+            }
+            yield return new WaitForSeconds(invincibility);
+            isDamaged = false;
+        }
+
+    }
+
+    public void Death()
+    {
+
     }
 
     //not working
-    IEnumerator Dash(bool canDash, bool isDashing, Transform enemy, Transform player, float dashSpeed, float dashTime, float dashCoolDown)
+    public IEnumerator Dash(bool canDash, bool isDashing, Transform enemy, Transform player, float dashSpeed, float dashTime, float dashCoolDown)
     {
         canDash = false;
         isDashing = true;

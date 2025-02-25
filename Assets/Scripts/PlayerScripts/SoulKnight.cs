@@ -7,6 +7,11 @@ public class SoulKnight : PlayerController
     [SerializeField] EssenceBar eBar;
     [SerializeField] HealthBar hBar;
     [SerializeField] GameObject soulFire;
+    
+    //MeleeAttack
+    GameObject attackRange;
+    public static bool canAttack;
+    float attackCoolDown;
 
 
 
@@ -42,6 +47,8 @@ public class SoulKnight : PlayerController
         essenceBar = eBar;
         isCasting = false;
 
+        //Attack
+        attackRange = rotationPoint.transform.GetChild(1).gameObject;
     }
 
 
@@ -71,10 +78,21 @@ public class SoulKnight : PlayerController
             StartCoroutine(Cast(soulFire));
         }
 
+        //MeleeAttack
+        StartCoroutine(MeleeAttack());
+
     }
 
-    void MeleeAttack()
+    IEnumerator MeleeAttack()
     {
-
+        if(Input.GetMouseButton(0) && canAttack == true)
+        {
+            canAttack = false;
+            attackRange.SetActive(true);
+            yield return new WaitForSeconds(0.2f);
+            attackRange.SetActive(false);
+            yield return new WaitForSeconds(attackCoolDown);
+            canAttack = true;
+        }
     }
 }
