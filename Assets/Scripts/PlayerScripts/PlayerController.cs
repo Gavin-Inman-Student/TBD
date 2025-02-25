@@ -17,18 +17,17 @@ public class PlayerController : MonoBehaviour
     protected static bool swapped = true;
     protected static bool isSwapping;
     protected static bool canSwap = true;
-    protected static float swapTime = 1;
-    protected static GameObject wispClone;
-    protected static GameObject soulKnightClone;
-    protected static GameObject selected;
+    protected static float swapTime = 10;
+    protected static Transform knightT;
+    protected static Transform soulT;
 
 
     [Header("Dash")]
-    protected bool isDashing;
-    protected bool canDash;
-    protected float dashSpeed = 8;
-    protected float dashTime = 0.2f;
-    protected float dashCoolDown = 2;
+    protected static bool isDashing;
+    protected static bool canDash;
+    protected static float dashSpeed = 8;
+    protected static float dashTime = 0.2f;
+    protected static float dashCoolDown = 2;
 
     [Header("Look")]
     protected Camera camera;
@@ -42,19 +41,19 @@ public class PlayerController : MonoBehaviour
 
     [Header("SoulEssence")]
     protected EssenceBar essenceBar;
-    protected bool canRegen;
-    protected float maxEssence = 50;
-    protected float soulEssence;
-    protected float regenAmmount = 5;
-    protected float regenSpeed = 5;
+    protected static bool canRegen;
+    protected static float maxEssence = 50;
+    protected static float soulEssence;
+    protected static float regenAmmount = 5;
+    protected static float regenSpeed = 5;
 
 
     [Header("Health")]
     protected HealthBar healthBar;
-    protected bool isDamaged;
-    protected float maxHealth = 100;
-    protected float health;
-    protected float invincibility = 0.5f;
+    protected static bool isDamaged;
+    protected static float maxHealth = 100;
+    protected static float health;
+    protected static float invincibility = 0.5f;
 
 
 
@@ -66,7 +65,7 @@ public class PlayerController : MonoBehaviour
     }
     public void Movement(Rigidbody2D rb)
     {
-        if (isDashing == true)
+        if (isDashing == true || isSwapping == true)
         {
             return;
         }
@@ -125,32 +124,37 @@ public class PlayerController : MonoBehaviour
     //Swap Bodys
     public IEnumerator Swap()
     {
-
-        if (swapped == true && canSwap == true && isSwapping == false)
+        if (Input.GetKey(KeyCode.Tab) && canDash == true && isDamaged == false && isCasting == false)
         {
-            canSwap = false;
-            isSwapping = true;
-            selected = wisp;
-            wispClone = GameObject.Instantiate(wisp, spawnPoint.position, Quaternion.identity);
-            GameObject.Destroy(soulKnightClone);
-            yield return new WaitForSeconds(swapTime);
-            swapped = false;
-            isSwapping = false;
-            canSwap = true;
+            if (swapped == true && canSwap == true)
+            {
+                wisp.transform.position = knightT.position;
+                canSwap = false;
+                isSwapping = true;
+                swapped = false;
+                soulKnight.SetActive(false);
+                wisp.SetActive(true);
+                yield return new WaitForSeconds(0.5f);
+                isSwapping = false;
+                yield return new WaitForSeconds(swapTime);
+                
+                canSwap = true;
+            }
+            else if (swapped == false && canSwap == true)
+            {
+                soulKnight.transform.position = soulT.position;
+                canSwap = false;
+                isSwapping = true;
+                swapped = true;
+                wisp.SetActive(false);
+                soulKnight.SetActive(true);
+                yield return new WaitForSeconds(0.5f);
+                isSwapping = false;
+                yield return new WaitForSeconds(swapTime);
+                
+                canSwap = true;
+            }
         }
-        else if (swapped == false && canSwap == true && isSwapping == false)
-        {
-            canSwap = false;
-            isSwapping = true;
-            selected = soulKnight;
-            soulKnightClone = GameObject.Instantiate(soulKnight, spawnPoint.position, Quaternion.identity);
-            GameObject.Destroy(wispClone);
-            yield return new WaitForSeconds(swapTime);
-            swapped = true; 
-            isSwapping = false;
-            canSwap = true;
-        }
-        
         
     }
 

@@ -69,7 +69,7 @@ Camera:
   far clip plane: 1000
   field of view: 116.47774
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -299,8 +299,6 @@ MonoBehaviour:
   eBar: {fileID: 0}
   hBar: {fileID: 0}
   soulFire: {fileID: 296734189390238399, guid: 7cb0b598a7ee4ac44af0495bf4f6b909, type: 3}
-  knight: {fileID: 5073273369821661608}
-  pWisp: {fileID: 7637277820191656616, guid: b629334ac25105e4aae29f21b49849a2, type: 3}
   soulAmmount: 0
   healthAmmount: 0
 --- !u!70 &5012103998084564909

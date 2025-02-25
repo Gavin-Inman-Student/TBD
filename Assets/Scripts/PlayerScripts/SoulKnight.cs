@@ -7,8 +7,6 @@ public class SoulKnight : PlayerController
     [SerializeField] EssenceBar eBar;
     [SerializeField] HealthBar hBar;
     [SerializeField] GameObject soulFire;
-    [SerializeField] GameObject knight;
-    [SerializeField] GameObject pWisp;
 
 
 
@@ -23,12 +21,8 @@ public class SoulKnight : PlayerController
     void Start()
     {
         //Movement
-        rb = GetComponent<Rigidbody2D>();
-        soulKnight = knight;
-        wisp = pWisp;
+        rb = GetComponent<Rigidbody2D>();   
 
-        //swap
-        swapped = false;
 
         //Look and cast
         rotationPoint = transform.GetChild(1).gameObject;
@@ -42,12 +36,11 @@ public class SoulKnight : PlayerController
         //HealthManager
         healthBar = hBar;
         isDamaged = false;
-        health = maxHealth;
+
 
         //EssenceManager
         essenceBar = eBar;
         isCasting = false;
-        soulEssence = maxEssence;
 
     }
 
@@ -74,31 +67,10 @@ public class SoulKnight : PlayerController
         if (Input.GetKey(KeyCode.E))
         {
             //SoulEssenceManager is called when abilty used
-            if (soulFire == null)
-            {
-                Debug.Log("soulFire is not assigned!");
-            }
-            else
-            {
-                SoulEssenceManager(20);
-                StartCoroutine(Cast(soulFire));
-            }
+            SoulEssenceManager(20);
+            StartCoroutine(Cast(soulFire));
         }
 
-        //EssenceRegen
-        StartCoroutine(EssenceRegen());
-
-        //Test damage and healthbar/essence bar
-        if (Input.GetKey(KeyCode.Q))
-        {
-            StartCoroutine(HealthManager(0, 20));
-        }
-
-        //swap
-        if (Input.GetKey(KeyCode.Tab))
-        {
-            StartCoroutine(Swap());
-        }
     }
 
     void MeleeAttack()

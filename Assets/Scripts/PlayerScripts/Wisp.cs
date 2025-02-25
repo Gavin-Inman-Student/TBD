@@ -7,9 +7,6 @@ public class Wisp : PlayerController
     [SerializeField] EssenceBar eBar;
     [SerializeField] HealthBar hBar;
     [SerializeField] GameObject soulFire;
-    [SerializeField] GameObject pWisp;
-    [SerializeField] GameObject knight;
-
 
 
     //Testing purposes...allows us to view the soul ammount from the inspector
@@ -24,8 +21,7 @@ public class Wisp : PlayerController
     {
         //Movement
         rb = GetComponent<Rigidbody2D>();
-        wisp = pWisp;
-        soulKnight = knight;
+
 
         //Look and cast
         rotationPoint = transform.GetChild(1).gameObject;
@@ -39,12 +35,10 @@ public class Wisp : PlayerController
         //HealthManager
         healthBar = hBar;
         isDamaged = false;
-        health = maxHealth;
 
         //EssenceManager
         essenceBar = eBar;
         isCasting = false;
-        soulEssence = maxEssence;
         
     }
 
@@ -82,19 +76,14 @@ public class Wisp : PlayerController
             }
         }
 
-        //EssenceRegen
-        StartCoroutine(EssenceRegen());
-        
-        //Test damage and healthbar/essence bar
-        if (Input.GetKey(KeyCode.Q))
+        //Essence Regen
+        if(isSwapping != true)
         {
-            StartCoroutine(HealthManager(0, 20));
+            StartCoroutine(EssenceRegen());
         }
+        
 
         //swap
-        if (Input.GetKey(KeyCode.Tab))
-        {
-            StartCoroutine(Swap());
-        }
+
     }
 }
