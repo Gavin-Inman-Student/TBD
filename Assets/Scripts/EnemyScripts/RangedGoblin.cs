@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Goblin : MeleeEnemy
+public class RangedGoblin : RangedEnemy
 {
     [SerializeField] HealthBar hBar;
     [SerializeField] float dist;
@@ -11,8 +11,12 @@ public class Goblin : MeleeEnemy
     {
         //movement
         moveSpeed = 1;
-        enemy = this.transform;
-        
+
+        //dash
+        canDash = true;
+        dashSpeed = 8;
+        dashCoolDown = 5;
+        dashTime = 0.2f;
         //health
         maxHealth = 100;
         health = maxHealth;
@@ -20,8 +24,8 @@ public class Goblin : MeleeEnemy
 
         //attack
         rotatePoint = transform.GetChild(0).gameObject;
-        warning = rotatePoint.transform.GetChild(0).gameObject;
-        attack = rotatePoint.transform.GetChild(1).gameObject;
+        spawnPoint = rotatePoint.transform.GetChild(0);
+        attackDistance = 8f;
         attacking = false;
 
     }
@@ -31,9 +35,10 @@ public class Goblin : MeleeEnemy
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
-        StartCoroutine(MeleeAttack());
+        StartCoroutine(RangedAttack());
 
         Movement();
+        StartCoroutine(Dash());
 
         Look();
 
@@ -43,10 +48,10 @@ public class Goblin : MeleeEnemy
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (string.IsNullOrEmpty(tag) && !other.gameObject.CompareTag("pAttack"))
+        if (other.gameObject.CompareTag("pAttack"))
         {
-            return;
+            StartCoroutine(HealthManager(PlayerController.damage));
         }
-        StartCoroutine(HealthManager());
+
     }
 }

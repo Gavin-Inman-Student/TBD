@@ -59,7 +59,6 @@ public class PlayerController : MonoBehaviour
     public static float damage;
 
 
-
     //Player Movement Function that takes which player body to control and the speed. Allows the player to move.
 
     private void Start()

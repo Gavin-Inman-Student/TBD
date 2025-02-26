@@ -180,10 +180,11 @@ GameObject:
   - component: {fileID: 3009931872917096334}
   - component: {fileID: 7705919255520474199}
   - component: {fileID: 4002726114709872313}
-  - component: {fileID: 5012103998084564909}
+  - component: {fileID: 5726489507964677516}
+  - component: {fileID: 6876204955476516471}
   m_Layer: 0
   m_Name: SoulKnight
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -301,8 +302,45 @@ MonoBehaviour:
   soulFire: {fileID: 296734189390238399, guid: 7cb0b598a7ee4ac44af0495bf4f6b909, type: 3}
   soulAmmount: 0
   healthAmmount: 0
---- !u!70 &5012103998084564909
+--- !u!70 &5726489507964677516
 CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5073273369821661608}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.009758234, y: 0.039032698}
+  m_Size: {x: 0.48850393, y: 1.1995902}
+  m_Direction: 0
+--- !u!58 &6876204955476516471
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -335,9 +373,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.024006695, y: -0.6855258}
-  m_Size: {x: 0.39714247, y: 0.39714313}
-  m_Direction: 0
+  m_Offset: {x: 0.030710906, y: -0.7739152}
+  m_Radius: 0.100545764
 --- !u!1 &5980851407181236648
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,7 +420,7 @@ GameObject:
   - component: {fileID: 4106545417589221486}
   m_Layer: 0
   m_Name: MeleeAttackRange
-  m_TagString: Untagged
+  m_TagString: pAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -433,11 +470,11 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.20166865, y: 0}
+  m_Offset: {x: 0.5695441, y: 0.13524795}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -447,5 +484,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.9033373, y: 0.9033373}
+  m_Size: {x: 1.6390882, y: 0.28660536}
   m_EdgeRadius: 0

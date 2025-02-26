@@ -13,6 +13,8 @@ public class SoulFire : MonoBehaviour
     Camera camera;
     void Start()
     {
+        
+        //sets spawn and velocity of projetile on spawn
         camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
@@ -24,13 +26,14 @@ public class SoulFire : MonoBehaviour
 
     }
 
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        GameObject.Destroy(this.gameObject);
-    }
+
+    //Destroys on contact, uses trigger instead of collision due to lack of realistic colliders
     void OnTriggerEnter2D(Collider2D other)
     {
-        GameObject.Destroy(this.gameObject);
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Terrian"))
+        {
+            GameObject.Destroy(this.gameObject);
+        }
     }
 }
 

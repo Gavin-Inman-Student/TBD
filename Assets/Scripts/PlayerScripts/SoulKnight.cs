@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SoulKnight : PlayerController
 {
@@ -13,7 +14,6 @@ public class SoulKnight : PlayerController
     public static bool canAttack;
     float attackCoolDown = 0.8f;
     protected float meleeAttackDamage = 20;
-
 
 
     //Testing purposes...allows us to view the soul ammount from the inspector
@@ -84,6 +84,7 @@ public class SoulKnight : PlayerController
 
     }
 
+    //Melee Attack
     IEnumerator MeleeAttack()
     {
         if(Input.GetMouseButton(0) && canAttack == true)
@@ -97,4 +98,16 @@ public class SoulKnight : PlayerController
             canAttack = true;
         }
     }
+
+    //Melee Damage to player
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("eAttack"))
+        {
+            StartCoroutine(HealthManager(0, 20));
+        }
+        
+    }
 }
+
+

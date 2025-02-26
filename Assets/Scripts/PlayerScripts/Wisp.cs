@@ -81,9 +81,16 @@ public class Wisp : PlayerController
         {
             StartCoroutine(EssenceRegen());
         }
-        
 
-        //swap
+    }
+
+    //Melee Damage to player
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("eAttack"))
+        {
+            StartCoroutine(HealthManager(0, 20));
+        }
 
     }
 }
