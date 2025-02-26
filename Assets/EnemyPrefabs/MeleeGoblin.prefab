@@ -112,8 +112,10 @@ GameObject:
   m_Component:
   - component: {fileID: 9063232975476871693}
   - component: {fileID: 4245264052805818352}
+  - component: {fileID: 9154872240449529476}
   - component: {fileID: 2353540795860237632}
   - component: {fileID: 3894356526212992966}
+  - component: {fileID: 904499392146714687}
   m_Layer: 0
   m_Name: MeleeGoblin
   m_TagString: Untagged
@@ -134,8 +136,7 @@ Transform:
   m_LocalScale: {x: 0.5336, y: 0.5336, z: 0.5336}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6660274234584571924}
-  - {fileID: 6928422526835883703}
+  - {fileID: 2643190445559010518}
   - {fileID: 5333975139677842456}
   - {fileID: 3602421311715099469}
   m_Father: {fileID: 0}
@@ -192,6 +193,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &9154872240449529476
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715512978220487165}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!58 &2353540795860237632
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -226,8 +254,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.011449153, y: -0.7098559}
-  m_Radius: 0.17941949
+  m_Offset: {x: 0.001310498, y: -0.8923991}
+  m_Radius: 0.20988476
 --- !u!114 &3894356526212992966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +268,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb950b5c8f849a43b17dd926904e5b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+  hBar: {fileID: 8708440250611880944}
+  dist: 0
+--- !u!61 &904499392146714687
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715512978220487165}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1254300585450075943
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +329,7 @@ GameObject:
   - component: {fileID: 2557445270786206827}
   - component: {fileID: 1565566569913225649}
   - component: {fileID: 7647289323347496324}
+  - component: {fileID: 8708440250611880944}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -368,6 +446,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8708440250611880944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254300585450075943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ea2e65008649744a8661d4720d51317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 7647289323347496324}
 --- !u!1 &1812816076893395475
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,6 +534,39 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &3638614097222681843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2643190445559010518}
+  m_Layer: 0
+  m_Name: RotatePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2643190445559010518
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3638614097222681843}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.3746517, y: 1.7589698, z: 0.08702208}
+  m_LocalScale: {x: 1.874063, y: 1.874063, z: 1.874063}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6660274234584571924}
+  - {fileID: 6928422526835883703}
+  m_Father: {fileID: 9063232975476871693}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4506900083113050271
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,11 +677,11 @@ Transform:
   m_GameObject: {fileID: 5795353879349180604}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0026236768, y: -1.0001874, z: 0}
-  m_LocalScale: {x: 2.2154157, y: 1.0531942, z: 1.874063}
+  m_LocalPosition: {x: 1.2685142, y: -1.4722863, z: -0.046434984}
+  m_LocalScale: {x: 1.1821457, y: 0.56198436, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9063232975476871693}
+  m_Father: {fileID: 2643190445559010518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6112599355852856644
 SpriteRenderer:
@@ -636,12 +760,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8557744141600742609}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 2.286919, y: 1.0942653, z: 1.874063}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.2671142, y: -1.4721862, z: -0.046434984}
+  m_LocalScale: {x: 1.2203, y: 0.5839, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9063232975476871693}
+  m_Father: {fileID: 2643190445559010518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2054305629531416320
 SpriteRenderer:

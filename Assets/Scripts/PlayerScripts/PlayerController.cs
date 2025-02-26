@@ -33,11 +33,12 @@ public class PlayerController : MonoBehaviour
     protected Camera camera;
     protected GameObject rotationPoint;
 
-    [Header("Cast")]
+    [Header("SoulFire")]
     protected GameObject cast;
     protected Transform spawnPoint;
     protected bool isCasting;
     protected bool canShoot;
+    protected float soulFireDamage = 15;
 
     [Header("SoulEssence")]
     protected EssenceBar essenceBar;
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour
     protected static float health;
     protected static float invincibility = 0.5f;
 
-    public static float damage = 20;
+    public static float damage;
 
 
 
@@ -110,11 +111,12 @@ public class PlayerController : MonoBehaviour
     }
 
     //Instantiates SoulFire Ranged Attack.
-    public IEnumerator Cast(GameObject cast)
+    public IEnumerator SoulFire(GameObject cast)
     {
         if (isCasting  == false && canShoot == true)
         {
             isCasting = true;
+            damage = soulFireDamage;
             Instantiate(cast, spawnPoint.position, spawnPoint.rotation);
             yield return new WaitForSeconds(1);
             

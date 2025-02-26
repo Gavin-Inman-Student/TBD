@@ -72,7 +72,7 @@ public class Wisp : PlayerController
             else
             {
                 SoulEssenceManager(20);
-                StartCoroutine(Cast(soulFire));
+                StartCoroutine(SoulFire(soulFire));
             }
         }
 

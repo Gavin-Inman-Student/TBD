@@ -13,36 +13,38 @@ public class EnemyController : MonoBehaviour
     protected float stopTime;
     protected bool isStopping = false;
 
+    [Header("Look")]
+    protected GameObject rotatePoint;
+    protected GameObject warning;
+    protected GameObject attack;
+
     [Header("Health")]
     protected HealthBar healthBar;
-    protected static bool isDamaged;
-    protected static float maxHealth;
-    protected static float health;
-    protected static float invincibility = 0.5f;
-    protected Collider2D soulFire;
+    protected bool isDamaged;
+    protected float maxHealth;
+    public float health;
+    protected float invincibility = 0.5f;
 
     void Start()
     {
-        soulFire = GameObject.FindWithTag("SoulFire").GetComponent<Collider2D>();
+
     }
 
-    public IEnumerator Movement()
+
+    //movement
+    public void Movement()
     {
-        if(isStopping == false)
-        {
-            enemy.position = Vector2.MoveTowards(enemy.position, player.position, moveSpeed * Time.deltaTime);
-            yield return new WaitForSeconds(moveTime);
-            isStopping = true;
-        }
-        
-        if(isStopping == true)
-        {
-            enemy.transform.position = enemy.position;
-            yield return new WaitForSeconds(stopTime);
-            isStopping= false;
-        }
+         enemy.position = Vector2.MoveTowards(enemy.position, player.position, moveSpeed * Time.deltaTime);
     }
 
+    //faces player
+    public void Look()
+    {
+        
+    }
+
+
+    //Navagates damage dealt
     public IEnumerator HealthManager()
     {
         if (isDamaged == false)
@@ -61,9 +63,13 @@ public class EnemyController : MonoBehaviour
 
     }
 
+    //Destroys Object
     public void Death()
     {
-
+        if (health <= 0)
+        {
+            GameObject.Destroy(this.gameObject);
+        }
     }
 
     //not working

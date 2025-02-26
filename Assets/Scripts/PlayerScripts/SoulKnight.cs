@@ -11,7 +11,8 @@ public class SoulKnight : PlayerController
     //MeleeAttack
     GameObject attackRange;
     public static bool canAttack;
-    float attackCoolDown;
+    float attackCoolDown = 0.8f;
+    protected float meleeAttackDamage = 20;
 
 
 
@@ -75,7 +76,7 @@ public class SoulKnight : PlayerController
         {
             //SoulEssenceManager is called when abilty used
             SoulEssenceManager(20);
-            StartCoroutine(Cast(soulFire));
+            StartCoroutine(SoulFire(soulFire));
         }
 
         //MeleeAttack
@@ -88,8 +89,9 @@ public class SoulKnight : PlayerController
         if(Input.GetMouseButton(0) && canAttack == true)
         {
             canAttack = false;
+            damage = meleeAttackDamage;
             attackRange.SetActive(true);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
             attackRange.SetActive(false);
             yield return new WaitForSeconds(attackCoolDown);
             canAttack = true;
