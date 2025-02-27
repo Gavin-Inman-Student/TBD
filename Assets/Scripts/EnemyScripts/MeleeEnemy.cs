@@ -8,6 +8,7 @@ public class MeleeEnemy : EnemyController
 
     void Start()
     {
+       
     }
 
     void Update()
@@ -24,13 +25,16 @@ public class MeleeEnemy : EnemyController
             attacking = true;
             canLook = false;
             warning.SetActive(true);
+
             yield return new WaitForSeconds(warningTime);
             warning.SetActive(false);
             attack.SetActive(true);
+
             yield return new WaitForSeconds(0.2f);
             attack.SetActive(false);
             canLook = true;
-            yield return new WaitForSeconds(0.2f);
+
+            yield return new WaitForSeconds(1);
             attacking = false;
         }    
         

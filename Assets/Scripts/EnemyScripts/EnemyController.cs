@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     protected float moveTime;
     protected float stopTime;
     protected bool isStopping = false;
+    protected bool canStop = true;
 
     [Header("Dash")]
     protected bool isDashing;
@@ -18,6 +19,7 @@ public class EnemyController : MonoBehaviour
     protected float dashSpeed;
     protected float dashTime;
     protected float dashCoolDown;
+    protected float pauseTime;
 
     [Header("Look")]
     protected GameObject rotatePoint;
@@ -62,6 +64,21 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public IEnumerator Stop()
+    {
+        if (canStop == true && isDashing == false)
+        {
+            Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+            canStop = false;
+            yield return new WaitForSeconds(moveTime);
+            isStopping = true;
+            rb.velocity = Vector2.zero;
+            yield return new WaitForSeconds(stopTime);
+            isStopping = false;
+            canStop = true;
+        }
+    }
+
     //faces player
     public void Look()
     {
@@ -81,7 +98,6 @@ public class EnemyController : MonoBehaviour
         if (isDamaged == false)
         {
             isDamaged = true;
-            healthBar.SetMaxHealth(maxHealth, health);
             health -= damage;
             healthBar.SetHealth(health);
             if (health - damage <= 0)
@@ -106,21 +122,26 @@ public class EnemyController : MonoBehaviour
     //not working
     public IEnumerator Dash()
     {
-        if (canDash == true)
+        if (canDash == true && isStopping == false)
         {
+            Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
             canDash = false;
             isDashing = true;
+            isStopping = true;
             canLook = false;
             if (isDashing)
             {
-                Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+                
                 Vector2 pos = new Vector2((player.position.x - transform.position.x), (player.position.y - transform.position.y)).normalized;
                 rb.velocity = (pos * dashSpeed);
             }
             yield return new WaitForSeconds(dashTime);
             isDashing = false;
-            yield return new WaitForSeconds(dashCoolDown);
+            rb.velocity = Vector2.zero;
+            yield return new WaitForSeconds(pauseTime);
             canLook = true;
+            isStopping = false;
+            yield return new WaitForSeconds(dashCoolDown);
             canDash = true;
         }
     }

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -20,6 +19,7 @@ public class PlayerController : MonoBehaviour
     protected static float swapTime = 10;
     protected static Transform knightT;
     protected static Transform soulT;
+    protected static GameObject selected;
 
 
     [Header("Dash")]
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     protected static bool canDash;
     protected static float dashSpeed = 8;
     protected static float dashTime = 0.2f;
-    protected static float dashCoolDown = 2;
+    protected static float dashCoolDown = 1;
 
     [Header("Look")]
     protected Camera camera;
@@ -37,15 +37,15 @@ public class PlayerController : MonoBehaviour
     protected Transform spawnPoint;
     protected bool isCasting;
     protected bool canShoot;
-    protected float soulFireDamage = 15;
+    protected float soulFireDamage = 35;
 
     [Header("SoulEssence")]
     protected EssenceBar essenceBar;
     protected static bool canRegen;
     protected static float maxEssence = 50;
     protected static float soulEssence;
-    protected static float regenAmmount = 5;
-    protected static float regenSpeed = 5;
+    protected static float regenAmmount = 2;
+    protected static float regenSpeed = 1;
 
 
     [Header("Health")]
@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
     //Swap Bodys
     public IEnumerator Swap()
     {
-        if (Input.GetKey(KeyCode.Tab) && canDash == true && isDamaged == false && isCasting == false)
+        if (Input.GetKey(KeyCode.Tab) && isDashing == false && isDamaged == false && isCasting == false)
         {
             if (swapped == true && canSwap == true)
             {
@@ -134,10 +134,12 @@ public class PlayerController : MonoBehaviour
                 canSwap = false;
                 isSwapping = true;
                 swapped = false;
+                selected = soulKnight;
                 soulKnight.SetActive(false);
                 wisp.SetActive(true);
                 yield return new WaitForSeconds(0.5f);
                 isSwapping = false;
+                canDash = true;
                 yield return new WaitForSeconds(swapTime);
                 
                 canSwap = true;
@@ -148,10 +150,13 @@ public class PlayerController : MonoBehaviour
                 canSwap = false;
                 isSwapping = true;
                 swapped = true;
+                selected = wisp;
                 wisp.SetActive(false);
+                canRegen = true;
                 soulKnight.SetActive(true);
                 yield return new WaitForSeconds(0.5f);
                 isSwapping = false;
+                canDash = true;
                 yield return new WaitForSeconds(swapTime);
                 
                 canSwap = true;

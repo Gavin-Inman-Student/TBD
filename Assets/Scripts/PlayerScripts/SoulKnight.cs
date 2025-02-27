@@ -106,7 +106,11 @@ public class SoulKnight : PlayerController
         {
             StartCoroutine(HealthManager(0, 20));
         }
-        
+
+        else if (other.gameObject.CompareTag("Arrow"))
+        {
+            StartCoroutine(HealthManager(0, 10));
+        }
     }
 }
 

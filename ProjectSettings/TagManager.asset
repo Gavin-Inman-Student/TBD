@@ -8,6 +8,7 @@ TagManager:
   - pAttack
   - eAttack
   - Enemy
+  - Arrow
   layers:
   - Default
   - TransparentFX

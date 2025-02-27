@@ -32,6 +32,5 @@ public class GameManager : PlayerController
         
         //controlls which player
         StartCoroutine(Swap());
-       
     }
 }
