@@ -6,31 +6,30 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [Header("Movement")]
-    protected Transform player;
+    public static Transform player;
     protected float moveSpeed;
     protected float moveTime;
     protected float stopTime;
     protected bool isStopping = false;
 
     [Header("Dash")]
-    protected static bool isDashing;
-    protected static bool canDash;
-    protected static float dashSpeed;
-    protected static float dashTime;
-    protected static float dashCoolDown;
+    protected bool isDashing;
+    protected bool canDash;
+    protected float dashSpeed;
+    protected float dashTime;
+    protected float dashCoolDown;
 
     [Header("Look")]
     protected GameObject rotatePoint;
     protected GameObject warning;
     protected GameObject attack;
     protected bool canLook;
-    protected Vector3 flatPos;
 
     [Header("Health")]
     protected HealthBar healthBar;
     protected bool isDamaged;
     protected float maxHealth;
-    public float health;
+    protected float health;
     protected float invincibility = 0.5f;
 
     [Header("Attacks")]
@@ -68,8 +67,8 @@ public class EnemyController : MonoBehaviour
     {
         if (canLook == true)
         {
-            flatPos = player.position - transform.position;
-            float angle = Mathf.Atan2(flatPos.y, flatPos.x) * Mathf.Rad2Deg + 90;
+            Vector3 dist = player.position - transform.position;
+            float angle = Mathf.Atan2(dist.y, dist.x) * Mathf.Rad2Deg + 90;
             Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
             rotatePoint.transform.rotation = Quaternion.Slerp(transform.rotation, q, 180);
         }

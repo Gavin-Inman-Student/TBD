@@ -1746,6 +1746,10 @@ PrefabInstance:
       value: MeleeGoblin
       objectReference: {fileID: 0}
     - target: {fileID: 715512978220487165, guid: e77ef46fa3f7abe4d8061321a597e040, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 715512978220487165, guid: e77ef46fa3f7abe4d8061321a597e040, type: 3}
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
@@ -1755,11 +1759,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7862839776833119444, guid: e77ef46fa3f7abe4d8061321a597e040, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7862839776833119444, guid: e77ef46fa3f7abe4d8061321a597e040, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9063232975476871693, guid: e77ef46fa3f7abe4d8061321a597e040, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2546,6 +2550,10 @@ PrefabInstance:
       propertyPath: hBar
       value: 
       objectReference: {fileID: 1763996719}
+    - target: {fileID: 4002726114709872313, guid: b18628895a3524f478c65aa17ae24336, type: 3}
+      propertyPath: soulFire
+      value: 
+      objectReference: {fileID: 296734189390238399, guid: 7cb0b598a7ee4ac44af0495bf4f6b909, type: 3}
     - target: {fileID: 4106545417589221486, guid: b18628895a3524f478c65aa17ae24336, type: 3}
       propertyPath: m_Size.x
       value: 1.6390882
@@ -2649,6 +2657,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ea2e65008649744a8661d4720d51317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1888777062 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3623891568868840146, guid: 3bf02b467fe7f6441958346eabc6feda, type: 3}
+  m_PrefabInstance: {fileID: 4080445932275533580}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2069215064
 GameObject:
   m_ObjectHideFlags: 0
@@ -2773,6 +2786,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3623891568868840146, guid: 3bf02b467fe7f6441958346eabc6feda, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7092432759245228450, guid: 3bf02b467fe7f6441958346eabc6feda, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.597
@@ -2813,6 +2830,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9155351901052918967, guid: 3bf02b467fe7f6441958346eabc6feda, type: 3}
+      propertyPath: sp
+      value: 
+      objectReference: {fileID: 1888777062}
+    - target: {fileID: 9155351901052918967, guid: 3bf02b467fe7f6441958346eabc6feda, type: 3}
+      propertyPath: arrow
+      value: 
+      objectReference: {fileID: 5569145218117324358, guid: 33e99a3202952974a8374a26d26a0736, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

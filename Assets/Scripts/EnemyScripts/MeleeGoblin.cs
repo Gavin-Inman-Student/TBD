@@ -5,7 +5,6 @@ using UnityEngine;
 public class Goblin : MeleeEnemy
 {
     [SerializeField] HealthBar hBar;
-    [SerializeField] float dist;
 
     private void Start()
     {
@@ -44,7 +43,6 @@ public class Goblin : MeleeEnemy
         Look();
 
         distance = Vector3.Distance(player.position, transform.position);
-        dist = distance;
     }
 
     void OnTriggerEnter2D(Collider2D other)

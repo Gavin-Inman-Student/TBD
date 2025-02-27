@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour
     protected GameObject rotationPoint;
 
     [Header("SoulFire")]
-    protected GameObject cast;
     protected Transform spawnPoint;
     protected bool isCasting;
     protected bool canShoot;

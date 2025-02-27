@@ -5,7 +5,7 @@ using UnityEngine;
 public class RangedGoblin : RangedEnemy
 {
     [SerializeField] HealthBar hBar;
-    [SerializeField] float dist;
+    [SerializeField] GameObject arrow;
 
     private void Start()
     {
@@ -23,9 +23,10 @@ public class RangedGoblin : RangedEnemy
         healthBar = hBar;
 
         //attack
-        rotatePoint = transform.GetChild(0).gameObject;
+        rotatePoint = this.transform.GetChild(0).gameObject;
         spawnPoint = rotatePoint.transform.GetChild(0);
-        attackDistance = 8f;
+        sps = 3;
+        attackDistance = 20;
         attacking = false;
 
     }
@@ -34,16 +35,15 @@ public class RangedGoblin : RangedEnemy
     void Update()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-
-        StartCoroutine(RangedAttack());
-
+        
+        distance = Vector3.Distance(player.position, transform.position);
+        
         Movement();
         StartCoroutine(Dash());
-
+        
         Look();
-
-        distance = Vector3.Distance(player.position, transform.position);
-        dist = distance;
+        
+        StartCoroutine(RangedAttack(arrow));
     }
 
     void OnTriggerEnter2D(Collider2D other)

@@ -5,23 +5,23 @@ using UnityEngine;
 
 public class RangedEnemy : EnemyController
 {
-
-    protected GameObject projectile;
+    protected bool isShooting;
     protected Transform spawnPoint;
-    public IEnumerator RangedAttack()
+    protected float sps;
+
+    public IEnumerator RangedAttack(GameObject projectile)
     {
         if (distance <= attackDistance && attacking == false)
         {
-            attacking = true;
-            canLook = false;
-            warning.SetActive(true);
-            yield return new WaitForSeconds(warningTime);
-            Instantiate(projectile, spawnPoint.position, spawnPoint.rotation);
-            yield return new WaitForSeconds(0.2f);
-            attack.SetActive(false);
-            canLook = true;
-            yield return new WaitForSeconds(0.2f);
-            attacking = false;
+            if (isShooting == false)
+            {
+                attacking = true;
+                isShooting = true;
+                Instantiate(projectile, spawnPoint.position, Quaternion.identity);
+                yield return new WaitForSeconds(sps);
+                attacking = false;
+                isShooting = false;
+            }
         }
 
     }
