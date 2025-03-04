@@ -119,7 +119,20 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    //not working
+    //pause enemys on spawn
+    public IEnumerator Freeze()
+    {
+        canLook = true;
+        canDash = false;
+        isStopping = true;
+        attacking = true;
+        yield return new WaitForSeconds(1);
+        canDash = true;
+        isStopping = false;
+        attacking = false;
+    }
+
+    //Dashes at player
     public IEnumerator Dash()
     {
         if (canDash == true && isStopping == false)

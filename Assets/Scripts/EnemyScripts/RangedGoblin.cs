@@ -14,7 +14,6 @@ public class RangedGoblin : RangedEnemy
         followDistance = 5.5f;
 
         //dash
-        canDash = true;
         dashSpeed = 8;
         dashCoolDown = 5;
         dashTime = 0.2f;
@@ -29,7 +28,8 @@ public class RangedGoblin : RangedEnemy
         spawnPoint = rotatePoint.transform.GetChild(0);
         sps = 3;
         attackDistance = 2;
-        attacking = false;
+
+        StartCoroutine(Freeze());
 
     }
 
@@ -41,6 +41,7 @@ public class RangedGoblin : RangedEnemy
         distance = Vector3.Distance(player.position, transform.position);
         
         Run();
+        
         Follow();
         
         Look();

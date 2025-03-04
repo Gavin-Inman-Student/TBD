@@ -14,7 +14,6 @@ public class Goblin : MeleeEnemy
         moveTime = 10;
 
         //dash
-        canDash = true;
         dashSpeed = 8;
         dashCoolDown = 5;
         dashTime = 0.2f;
@@ -32,8 +31,8 @@ public class Goblin : MeleeEnemy
         warning = rotatePoint.transform.GetChild(0).gameObject;
         attack = rotatePoint.transform.GetChild(1).gameObject;
         attackDistance = 1.5f;
-        attacking = false;
 
+        StartCoroutine(Freeze());
     }
 
 
@@ -45,8 +44,8 @@ public class Goblin : MeleeEnemy
         
         
 
-        Movement();
         Look();
+        Movement();
         StartCoroutine(Dash());
         StartCoroutine(MeleeAttack());
         

@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (swapped == false && canSwap == true)
             {
-                soulKnight.transform.position = soulT.position;
+                soulKnight.transform.position = soulT.position + new Vector3 (0, 0.5f, 0);
                 canSwap = false;
                 isSwapping = true;
                 swapped = true;

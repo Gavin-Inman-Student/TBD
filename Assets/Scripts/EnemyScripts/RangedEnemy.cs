@@ -32,7 +32,7 @@ public class RangedEnemy : EnemyController
     public void Run()
     {
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-        if (distance <= attackDistance)
+        if (distance <= attackDistance && isStopping == false)
         {
             if (attacking == true)
             {
@@ -55,7 +55,7 @@ public class RangedEnemy : EnemyController
     public void Follow()
     {
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-        if (distance >= followDistance)
+        if (distance >= followDistance && isStopping == false)
         {
             isFollowing = true;
             Vector2 pos = new Vector2((player.position.x - transform.position.x), (player.position.y - transform.position.y)).normalized;

@@ -9,6 +9,7 @@ TagManager:
   - eAttack
   - Enemy
   - Arrow
+  - Terrian
   layers:
   - Default
   - TransparentFX
