@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Goblin : MeleeEnemy
 {
-    [SerializeField] HealthBar hBar;
+    [SerializeField] Bars hBar;
 
     private void Start()
     {
@@ -23,7 +23,9 @@ public class Goblin : MeleeEnemy
         maxHealth = 100;
         health = maxHealth;
         healthBar = hBar;
-        healthBar.SetMaxHealth(maxHealth, health);
+        healthBar.SetMax(maxHealth, health);
+
+        exp = 10;
         
 
         //attack

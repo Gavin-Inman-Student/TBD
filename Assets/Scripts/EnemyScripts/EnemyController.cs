@@ -28,7 +28,7 @@ public class EnemyController : MonoBehaviour
     protected bool canLook;
 
     [Header("Health")]
-    protected HealthBar healthBar;
+    protected Bars healthBar;
     protected bool isDamaged;
     protected float maxHealth;
     protected float health;
@@ -39,6 +39,8 @@ public class EnemyController : MonoBehaviour
     protected bool attacking;
     protected float distance;
     protected float warningTime = 0.5f;
+
+    protected float exp;
 
     void Start()
     {
@@ -99,7 +101,7 @@ public class EnemyController : MonoBehaviour
         {
             isDamaged = true;
             health -= damage;
-            healthBar.SetHealth(health);
+            healthBar.SetAmmount(health);
             if (health - damage <= 0)
             {
                 Death();
@@ -115,6 +117,7 @@ public class EnemyController : MonoBehaviour
     {
         if (health <= 0)
         {
+            PlayerController.LevelManager(exp);
             GameObject.Destroy(this.gameObject);
         }
     }

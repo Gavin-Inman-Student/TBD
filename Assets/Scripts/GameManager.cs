@@ -9,7 +9,11 @@ public class GameManager : PlayerController
     [SerializeField] GameObject pWisp;
     [SerializeField] Transform wispT;
     [SerializeField] Transform knightt;
-    private void Start()
+
+    [SerializeField] GameObject level;
+    [SerializeField] GameObject bar;
+
+    void Start()
     {
         //The two player chars
         soulKnight = knight;
@@ -24,7 +28,11 @@ public class GameManager : PlayerController
         knightT = knightt;
         soulT = wispT;
 
+        bars = bar;
+        levelScene = level;
+
         SoulKnight.canAttack = true;
+
     }
 
     void Update()

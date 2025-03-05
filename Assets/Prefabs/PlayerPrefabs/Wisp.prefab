@@ -335,6 +335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eBar: {fileID: 0}
   hBar: {fileID: 0}
+  lBar: {fileID: 0}
   soulFire: {fileID: 296734189390238399, guid: 7cb0b598a7ee4ac44af0495bf4f6b909, type: 3}
   soulAmmount: 0
   healthAmmount: 0

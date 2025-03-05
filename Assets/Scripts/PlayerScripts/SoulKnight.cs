@@ -5,8 +5,9 @@ using UnityEngine.Events;
 
 public class SoulKnight : PlayerController
 {
-    [SerializeField] EssenceBar eBar;
-    [SerializeField] HealthBar hBar;
+    [SerializeField] Bars eBar;
+    [SerializeField] Bars lBar;
+    [SerializeField] Bars hBar;
     [SerializeField] GameObject soulFire;
     
     //MeleeAttack
@@ -17,8 +18,6 @@ public class SoulKnight : PlayerController
 
 
     //Testing purposes...allows us to view the soul ammount from the inspector
-    [SerializeField] float soulAmmount;
-    [SerializeField] float healthAmmount;
 
     private void Awake()
     {
@@ -46,6 +45,7 @@ public class SoulKnight : PlayerController
 
         //EssenceManager
         essenceBar = eBar;
+        levelBar = lBar;
         isCasting = false;
 
         //Attack
@@ -55,9 +55,7 @@ public class SoulKnight : PlayerController
 
     void Update()
     {
-        //Testing purposes...allows us to view the soul ammount from the inspector
-        soulAmmount = soulEssence;
-        healthAmmount = health;
+
 
         //Movement
         Movement(rb);

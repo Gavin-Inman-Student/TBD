@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Wisp : PlayerController
 {
-    [SerializeField] EssenceBar eBar;
-    [SerializeField] HealthBar hBar;
+    [SerializeField] Bars eBar;
+    [SerializeField] Bars hBar;
+    [SerializeField] Bars lBar;
     [SerializeField] GameObject soulFire;
 
 
@@ -38,6 +39,7 @@ public class Wisp : PlayerController
 
         //EssenceManager
         essenceBar = eBar;
+        levelBar = lBar;
         isCasting = false;
         
     }
@@ -45,10 +47,12 @@ public class Wisp : PlayerController
  
     void Update()
     {
-        //Testing purposes...allows us to view the soul ammount from the inspector
-        soulAmmount = soulEssence;
-        healthAmmount = health;
-        
+
+        if (Input.GetKey(KeyCode.Y))
+        {
+            current = 110;
+        }
+
         //Movement
         Movement(rb);
         

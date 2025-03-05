@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using UnityEditor.Rendering.Universal;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -40,16 +42,25 @@ public class PlayerController : MonoBehaviour
     protected float soulFireDamage = 35;
 
     [Header("SoulEssence")]
-    protected EssenceBar essenceBar;
+    protected Bars essenceBar;
     protected static bool canRegen;
     protected static float maxEssence = 50;
     protected static float soulEssence;
     protected static float regenAmmount = 2;
     protected static float regenSpeed = 1;
 
+    [Header("Level")]
+    protected static Bars levelBar;
+    protected static float needed = 100;
+    protected static float current;
+    
+    protected static GameObject levelScene;
+    protected static GameObject bars;
+    public static bool levelWindow = false;
+
 
     [Header("Health")]
-    protected HealthBar healthBar;
+    protected Bars healthBar;
     protected static bool isDamaged;
     protected static float maxHealth = 100;
     protected static float health;
@@ -126,7 +137,7 @@ public class PlayerController : MonoBehaviour
     //Swap Bodys
     public IEnumerator Swap()
     {
-        if (Input.GetKey(KeyCode.Tab) && isDashing == false && isDamaged == false && isCasting == false)
+        if (Input.GetKey(KeyCode.Tab) && isDashing == false && isDamaged == false && isCasting == false && Upgrade.bodyOfSteel == true)
         {
             if (swapped == true && canSwap == true)
             {
@@ -146,7 +157,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (swapped == false && canSwap == true)
             {
-                soulKnight.transform.position = soulT.position + new Vector3 (0, 0.5f, 0);
+                soulKnight.transform.position = soulT.position;
                 canSwap = false;
                 isSwapping = true;
                 swapped = true;
@@ -170,9 +181,9 @@ public class PlayerController : MonoBehaviour
         if(isDamaged == false)
         {
             isDamaged = true;
-            healthBar.SetMaxHealth(maxHealth, health);
+            healthBar.SetMax(maxHealth, health);
             health -= damage;
-            healthBar.SetHealth(health);
+            healthBar.SetAmmount(health);
             if (health - damage <= 0)
             {
                 Death();
@@ -193,7 +204,7 @@ public class PlayerController : MonoBehaviour
 
     public void SoulEssenceManager(float cost)
     {
-        essenceBar.SetMaxEssence(maxEssence, soulEssence);
+        essenceBar.SetMax(maxEssence, soulEssence);
         if (soulEssence - cost < 0)
         {
             canShoot = false;
@@ -201,9 +212,33 @@ public class PlayerController : MonoBehaviour
         else if (soulEssence - cost >= 0 && isCasting == false)
         {
             soulEssence -= cost;
-            essenceBar.SetEssence(soulEssence);
+            essenceBar.SetAmmount(soulEssence);
             canShoot = true;   
         }
+    }
+
+    public static void LevelManager(float ammount)
+    {
+        levelBar.SetMax(needed, ammount);
+        current += ammount;
+        levelBar.SetAmmount(current);
+        ammount = 0;
+        if (current >= 100)
+        {
+            current =- 100;
+            needed =+ 50;
+            levelBar.SetAmmount(current);
+            LevelScene();
+        }
+    }
+
+    public static void LevelScene()
+    {
+        levelWindow = true;
+        Time.timeScale = 0;
+        levelScene.SetActive(true);
+        bars.SetActive(false);
+
     }
 
     public IEnumerator EssenceRegen()
@@ -219,7 +254,7 @@ public class PlayerController : MonoBehaviour
             {
                 canRegen = false;
                 soulEssence = soulEssence + regenAmmount;
-                essenceBar.SetEssence(soulEssence);
+                essenceBar.SetAmmount(soulEssence);
                 yield return new WaitForSeconds(regenSpeed);
                 canRegen = true;       
             }

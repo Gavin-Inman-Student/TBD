@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RangedGoblin : RangedEnemy
 {
-    [SerializeField] HealthBar hBar;
+    [SerializeField] Bars hBar;
     [SerializeField] GameObject arrow;
 
     private void Start()
@@ -21,7 +21,9 @@ public class RangedGoblin : RangedEnemy
         maxHealth = 80;
         health = maxHealth;
         healthBar = hBar;
-        healthBar.SetMaxHealth(maxHealth, health);
+        healthBar.SetMax(maxHealth, health);
+
+        exp = 20;
 
         //attack
         rotatePoint = this.transform.GetChild(0).gameObject;
