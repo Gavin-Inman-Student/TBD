@@ -42,9 +42,9 @@ public class PlayerController : MonoBehaviour
     protected float soulFireDamage = 35;
 
     [Header("SoulEssence")]
-    protected Bars essenceBar;
+    public static Bars essenceBar;
     protected static bool canRegen;
-    protected static float maxEssence = 50;
+    public static float maxEssence = 50;
     protected static float soulEssence;
     protected static float regenAmmount = 2;
     protected static float regenSpeed = 1;
@@ -54,15 +54,15 @@ public class PlayerController : MonoBehaviour
     protected static float needed = 100;
     protected static float current;
     
-    protected static GameObject levelScene;
-    protected static GameObject bars;
+    public static GameObject levelScene;
+    public static GameObject bars;
     public static bool levelWindow = false;
 
 
     [Header("Health")]
-    protected Bars healthBar;
+    public static Bars healthBar;
     protected static bool isDamaged;
-    protected static float maxHealth = 100;
+    public static float maxHealth = 100;
     protected static float health;
     protected static float invincibility = 0.5f;
 
@@ -231,6 +231,7 @@ public class PlayerController : MonoBehaviour
             LevelScene();
         }
     }
+
 
     public static void LevelScene()
     {

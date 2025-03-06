@@ -33,6 +33,8 @@ public class GameManager : PlayerController
 
         SoulKnight.canAttack = true;
 
+        swapped = false;
+
     }
 
     void Update()

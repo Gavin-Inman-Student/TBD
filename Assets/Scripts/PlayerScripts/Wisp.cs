@@ -14,9 +14,9 @@ public class Wisp : PlayerController
     [SerializeField] float soulAmmount;
     [SerializeField] float healthAmmount;
 
-    private void Awake()
-    {
-    }
+    //Testing purposes...allows us to view the soul ammount from the inspector
+    public float hp;
+    public float mp;
 
     void Start()
     {
@@ -41,16 +41,18 @@ public class Wisp : PlayerController
         essenceBar = eBar;
         levelBar = lBar;
         isCasting = false;
-        
     }
-
+        
  
     void Update()
     {
 
+        hp = health;
+        mp = soulEssence;
+
         if (Input.GetKey(KeyCode.Y))
         {
-            current = 110;
+            LevelManager(110);
         }
 
         //Movement
@@ -68,16 +70,8 @@ public class Wisp : PlayerController
         //SoulFire
         if (Input.GetKey(KeyCode.E))
         {
-            //SoulEssenceManager is called when abilty used
-            if (soulFire == null)
-            {
-                Debug.Log("soulFire is not assigned!");
-            }
-            else
-            {
-                SoulEssenceManager(20);
-                StartCoroutine(SoulFire(soulFire));
-            }
+            SoulEssenceManager(20);
+            StartCoroutine(SoulFire(soulFire));
         }
 
         //Essence Regen

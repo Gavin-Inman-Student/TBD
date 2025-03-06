@@ -1,54 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Upgrade : MonoBehaviour
 {
-    bool firstUpgrade = false;
+    public static bool firstUpgrade = false;
 
-    [Header("Upgrades Name")]
-    string upgrade1;
-    string upgrade2;
-    string upgrade3;
+    protected static string upgrade1;
+    protected static string upgrade2;
+    protected static string upgrade3;
 
-    string selected;
-
+    static string selected;
 
     [Header("Upgrades Bool")]
     public static bool bodyOfSteel = false;
+    public static bool biggerSoul1 = false;
+    public static bool biggerSoul2 = false;
 
-    public static string[] upgrades = {"BodyOfSteel"};
+    public static string[] upgrades1Array = {"BodyOfSteel", "StrongerSoul1", "StrongerSoul2", "StrongerSoul3", "BiggerSoul1", "BiggerSoul2"};
 
-    void Start()
+    static List<string> upgrades1List = new List<string>();
+
+
+    private void Start()
     {
-        if (PlayerController.levelWindow == true)
+        for(int i = 0; i < upgrades1Array.Length; i++)
         {
-            RandomUpgrade();
+            upgrades1List.Add(upgrades1Array[i]);
         }
     }
-
-    void Update()
+    void OnEnable()
     {
-        
+        UpgradeSelection();
+        UpgradeFilter();
     }
 
     public void UpgradeOne()
-    {
-
-
+    {  
         selected = upgrade1;
 
-        UpgradeSelection();
+        UpgradeSwitch();
+
+        PlayerController.levelScene.SetActive(false);
+        PlayerController.bars.SetActive(true);
+        Time.timeScale = 1.0f;
+        firstUpgrade = true;
     }
 
     public void UpgradeTwo()
     {
 
-
         selected = upgrade2;
 
-        UpgradeSelection();
+
+        UpgradeSwitch();
+
+        PlayerController.levelScene.SetActive(false);
+        PlayerController.bars.SetActive(true);
+        Time.timeScale = 1.0f;
+        firstUpgrade = true;
     }
 
     public void UpgradeThree()
@@ -56,10 +69,25 @@ public class Upgrade : MonoBehaviour
 
         selected = upgrade3;
 
-        UpgradeSelection();
+        UpgradeSwitch();
+
+
+        PlayerController.levelScene.SetActive(false);
+        PlayerController.bars.SetActive(true);
+        Time.timeScale = 1.0f;
+        firstUpgrade = true;
     }
 
-    public void RandomUpgrade()
+    public static void UpgradeSelection()
+    {      
+        RandomUpgrade();
+
+        GameObject.Find("UpgradeOne").GetComponentInChildren<TextMeshProUGUI>().SetText(upgrade1);
+        GameObject.Find("UpgradeTwo").GetComponentInChildren<TextMeshProUGUI>().SetText(upgrade2);
+        GameObject.Find("UpgradeThree").GetComponentInChildren<TextMeshProUGUI>().SetText(upgrade3);
+    }
+
+    public static void RandomUpgrade()
     {
         if (firstUpgrade == false)
         {
@@ -70,24 +98,58 @@ public class Upgrade : MonoBehaviour
         }
         else if (firstUpgrade == true)
         {
-            int value = Random.Range(0, upgrades.Length);
-            upgrade1 = upgrades[value];
+            int value = Random.Range(0, upgrades1List.Count);
+            upgrade1 = upgrades1List[value];
 
-            value = Random.Range(0, upgrades.Length);
-            upgrade2 = upgrades[value];
+            value = Random.Range(0, upgrades1List.Count);
+            upgrade2 = upgrades1List[value];
 
-            value = Random.Range(0, upgrades.Length);
-            upgrade3 = upgrades[value];
+            value = Random.Range(0, upgrades1List.Count);
+            upgrade3 = upgrades1List[value];
         }
     }
 
-    public void UpgradeSelection()
+    static void UpgradeFilter()
+    {
+        switch (selected)
+        {
+            case ("BodyOfSteel"):
+                if (bodyOfSteel == true)
+                {
+                    upgrades1List.Remove("BodyOfSteel");
+                    break;
+                }
+                else
+                    break;
+
+            case ("BiggerSoul1"):
+                if (biggerSoul1 == true)
+                {
+                    upgrades1List.Remove("BiggerSoul1");
+                    break;
+                }
+                else
+                    break; 
+        }
+    }
+
+    static void UpgradeSwitch()
     {
         switch (selected)
         {
             case ("BodyOfSteel"):
                 bodyOfSteel = true;
                 break;
+
+            case ("BiggerSoul1"):
+                PlayerController.maxEssence += 10;
+                PlayerController.essenceBar.SetMax(PlayerController.maxEssence, 0);
+                break;
+
+            case ("BiggerSoul2"):
+                PlayerController.maxEssence += 10;
+                break;
         }
     }
+
 }

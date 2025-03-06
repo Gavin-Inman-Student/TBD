@@ -18,6 +18,8 @@ public class SoulKnight : PlayerController
 
 
     //Testing purposes...allows us to view the soul ammount from the inspector
+    public float hp;
+    public float mp;
 
     private void Awake()
     {
@@ -25,6 +27,9 @@ public class SoulKnight : PlayerController
 
     void Start()
     {
+
+        
+        
         //Movement
         rb = GetComponent<Rigidbody2D>();   
 
@@ -55,7 +60,13 @@ public class SoulKnight : PlayerController
 
     void Update()
     {
-
+        hp = health;
+        mp = soulEssence;
+        
+        if (Input.GetKey(KeyCode.Y))
+        {
+            LevelManager(110);
+        }
 
         //Movement
         Movement(rb);
