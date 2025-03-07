@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     protected static float dashCoolDown = 1;
 
     [Header("Look")]
-    protected Camera camera;
+    new protected Camera camera;
     protected GameObject rotationPoint;
 
     [Header("SoulFire")]
@@ -42,9 +42,9 @@ public class PlayerController : MonoBehaviour
     protected float soulFireDamage = 35;
 
     [Header("SoulEssence")]
-    public static Bars essenceBar;
+    protected static Bars essenceBar;
     protected static bool canRegen;
-    public static float maxEssence = 50;
+    protected static float maxEssence = 50;
     protected static float soulEssence;
     protected static float regenAmmount = 2;
     protected static float regenSpeed = 1;
@@ -60,9 +60,9 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Health")]
-    public static Bars healthBar;
+    protected static Bars healthBar;
     protected static bool isDamaged;
-    public static float maxHealth = 100;
+    protected static float maxHealth = 100;
     protected static float health;
     protected static float invincibility = 0.5f;
 
@@ -249,14 +249,15 @@ public class PlayerController : MonoBehaviour
             if (soulEssence + regenAmmount >= maxEssence)
             {
                 soulEssence = maxEssence;
+                essenceBar.SetAmmount(soulEssence);
                 yield break;
             }
             else if (soulEssence + regenAmmount <= maxEssence)
             {
-                canRegen = false;
+                canRegen = false; 
                 soulEssence = soulEssence + regenAmmount;
                 essenceBar.SetAmmount(soulEssence);
-                yield return new WaitForSeconds(regenSpeed);
+                yield return new WaitForSeconds(regenSpeed);  
                 canRegen = true;       
             }
         }

@@ -5,22 +5,29 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Upgrade : MonoBehaviour
+public class Upgrade : PlayerController
 {
+
+    [Header("Upgrades Controller")]
     public static bool firstUpgrade = false;
 
     protected static string upgrade1;
     protected static string upgrade2;
     protected static string upgrade3;
 
-    static string selected;
+    new static string selected;
 
     [Header("Upgrades Bool")]
     public static bool bodyOfSteel = false;
     public static bool biggerSoul1 = false;
     public static bool biggerSoul2 = false;
+    public static bool strongerSoul1 = false;
+    public static bool resilient1 = false;
+    public static bool resilient2 = false;
 
-    public static string[] upgrades1Array = {"BodyOfSteel", "StrongerSoul1", "StrongerSoul2", "StrongerSoul3", "BiggerSoul1", "BiggerSoul2"};
+
+    [Header("Upgrades")]
+    public static string[] upgrades1Array = {"BodyOfSteel", "StrongerSoul1", "BiggerSoul1", "BiggerSoul2", "Resilient1", "Resilient2" };
 
     static List<string> upgrades1List = new List<string>();
 
@@ -43,9 +50,10 @@ public class Upgrade : MonoBehaviour
         selected = upgrade1;
 
         UpgradeSwitch();
+        UpgradeFilter();
 
-        PlayerController.levelScene.SetActive(false);
-        PlayerController.bars.SetActive(true);
+        levelScene.SetActive(false);
+        bars.SetActive(true);
         Time.timeScale = 1.0f;
         firstUpgrade = true;
     }
@@ -57,9 +65,10 @@ public class Upgrade : MonoBehaviour
 
 
         UpgradeSwitch();
+        UpgradeFilter();
 
-        PlayerController.levelScene.SetActive(false);
-        PlayerController.bars.SetActive(true);
+        levelScene.SetActive(false);
+        bars.SetActive(true);
         Time.timeScale = 1.0f;
         firstUpgrade = true;
     }
@@ -70,10 +79,10 @@ public class Upgrade : MonoBehaviour
         selected = upgrade3;
 
         UpgradeSwitch();
+        UpgradeFilter();
 
-
-        PlayerController.levelScene.SetActive(false);
-        PlayerController.bars.SetActive(true);
+        levelScene.SetActive(false);
+        bars.SetActive(true);
         Time.timeScale = 1.0f;
         firstUpgrade = true;
     }
@@ -129,7 +138,43 @@ public class Upgrade : MonoBehaviour
                     break;
                 }
                 else
-                    break; 
+                    break;
+
+            case ("BiggerSoul2"):
+                if (biggerSoul2 == true)
+                {
+                    upgrades1List.Remove("BiggerSoul2");
+                    break;
+                }
+                else
+                    break;
+
+            case ("StrongerSoul1"):
+                if (strongerSoul1 == true)
+                {
+                    upgrades1List.Remove("StrongerSoul1");
+                    break;
+                }
+                else
+                    break;
+
+            case ("Resilient1"):
+                if (resilient1 == true)
+                {
+                    upgrades1List.Remove("Resilient1");
+                    break;
+                }
+                else
+                    break;
+
+            case ("Resilient2"):
+                if (resilient2 == true)
+                {
+                    upgrades1List.Remove("Resilient2");
+                    break;
+                }
+                else
+                    break;
         }
     }
 
@@ -142,12 +187,35 @@ public class Upgrade : MonoBehaviour
                 break;
 
             case ("BiggerSoul1"):
-                PlayerController.maxEssence += 10;
-                PlayerController.essenceBar.SetMax(PlayerController.maxEssence, 0);
+                biggerSoul1 = true;
+                maxEssence += 10;
+                essenceBar.SetMax(maxEssence, soulEssence);
                 break;
 
             case ("BiggerSoul2"):
-                PlayerController.maxEssence += 10;
+                biggerSoul2 = true;
+                maxEssence += 10;
+                essenceBar.SetMax(maxEssence, soulEssence);
+                break;
+
+            case ("StrongerSoul1"):
+                strongerSoul1 = true;
+                regenAmmount += 1;
+                essenceBar.SetMax(maxEssence, soulEssence);
+                break;
+
+            case ("Resilient1"):
+                resilient1 = true;
+                maxHealth += 10;
+                health += 10;
+                healthBar.SetMax(maxEssence, soulEssence);
+                break;
+
+            case ("Resilient2"):
+                resilient2 = true;
+                maxHealth += 10;
+                health += 10;
+                healthBar.SetMax(maxEssence, soulEssence);
                 break;
         }
     }
